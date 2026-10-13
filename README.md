@@ -64,7 +64,7 @@ Taken together, this monograph re-frames GNN-based recommendation through its to
 
 ![Timeline of graph CF](docs/assets/img/timeline.png)
 
-**The explanatory framework in action** (LightGCN). Impact of each dataset characteristic on Recall@20; darker bars are more statistically significant. More models are shown on the [website](https://danielemalitesta.github.io/gnn-recsys-topology/#figures).
+**The explanatory framework in action** (LightGCN). Impact of each dataset characteristic on Recall@20; darker bars are more statistically significant. Results from our [RecSys 2024 paper](https://dl.acm.org/doi/10.1145/3640457.3688070). More models are shown on the [website](https://danielemalitesta.github.io/gnn-recsys-topology/#figures).
 
 ![Impact of dataset characteristics on LightGCN](docs/assets/img/LightGCN.png)
 
@@ -91,7 +91,7 @@ Taken together, this monograph re-frames GNN-based recommendation through its to
 
 ## Citation
 
-The official *Foundations and Trends® in Information Retrieval* reference will appear here upon publication (early 2027). For now, please cite the arXiv preprint:
+The official *Foundations and Trends® in Information Retrieval* reference will appear here upon publication (early 2027). For now, please cite the arXiv preprint, together with our RecSys 2024 paper below:
 
 ```bibtex
 @article{malitesta2025impact,
@@ -103,6 +103,21 @@ The official *Foundations and Trends® in Information Retrieval* reference will 
   archivePrefix = {arXiv},
   primaryClass  = {cs.IR},
   url           = {https://arxiv.org/abs/2512.07384}
+}
+```
+
+This monograph builds upon and extends our previous work, which first introduced the topology-aware evaluation of GNN-based recommender systems and the explanatory framework. **If you use or refer to this monograph, please also cite our RecSys 2024 paper** ([ACM DL](https://dl.acm.org/doi/10.1145/3640457.3688070)):
+
+```bibtex
+@inproceedings{malitesta2024novel,
+  title     = {A Novel Evaluation Perspective on GNNs-based Recommender Systems through the Topology of the User-Item Graph},
+  author    = {Malitesta, Daniele and Pomo, Claudio and Anelli, Vito Walter and Mancino, Alberto Carlo Maria and Di Noia, Tommaso and Di Sciascio, Eugenio},
+  booktitle = {Proceedings of the 18th ACM Conference on Recommender Systems (RecSys '24)},
+  pages     = {549--559},
+  publisher = {ACM},
+  year      = {2024},
+  doi       = {10.1145/3640457.3688070},
+  url       = {https://dl.acm.org/doi/10.1145/3640457.3688070}
 }
 ```
 

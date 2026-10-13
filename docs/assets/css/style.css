@@ -263,6 +263,9 @@ table.data td.pos { color: var(--accent); font-weight: 600; }
 .bib__copy:hover { background: rgba(255, 255, 255, .16); }
 .bib__copy svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
 .bib__copy.is-done { background: #2f8f5b; }
+.cite-also { margin: 40px 0 16px; padding: 20px 24px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--item); }
+.cite-also__title { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; margin-bottom: 6px; }
+.cite-also p:last-child { margin: 0; color: var(--ink-soft); font-size: 15.5px; }
 .bib pre { margin: 0; padding: 22px 24px; overflow-x: auto; color: var(--code-ink); font: 400 13.5px/1.7 var(--mono); }
 
 /* ---------- footer ---------- */
