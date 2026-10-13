@@ -89,6 +89,10 @@ Taken together, this monograph re-frames GNN-based recommendation through its to
 | **Alejandro Bellogín** | Universidad Autónoma de Madrid |
 | **Tommaso Di Noia** | Politecnico di Bari |
 
+## Contact
+
+Questions, comments or collaboration ideas? Contact **Daniele Malitesta** at [d.malitesta@gmail.com](mailto:d.malitesta@gmail.com).
+
 ## Citation
 
 The official *Foundations and Trends® in Information Retrieval* reference will appear here upon publication (early 2027). For now, please cite the arXiv preprint, together with our RecSys 2024 paper below:
