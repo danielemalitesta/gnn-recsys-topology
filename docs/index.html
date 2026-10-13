@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GNNs in Recommendation: A Topological Perspective</title>
+  <meta name="description" content="On the Impact of Graph Neural Networks in Recommender Systems: A Topological Perspective. A monograph accepted in Foundations and Trends in Information Retrieval.">
+  <meta property="og:title" content="On the Impact of Graph Neural Networks in Recommender Systems: A Topological Perspective">
+  <meta property="og:description" content="A topology-centered monograph on GNN-based recommendation. Accepted in Foundations and Trends in Information Retrieval.">
+  <meta property="og:image" content="assets/img/pipeline.png">
+  <meta name="theme-color" content="#f6f3ec">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#top" aria-label="Back to top">
+      <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+        <line x1="8" y1="8" x2="24" y2="16" /><line x1="8" y1="8" x2="24" y2="26" />
+        <line x1="8" y1="20" x2="24" y2="6" /><line x1="8" y1="20" x2="24" y2="16" />
+        <circle class="u" cx="8" cy="8" r="3.5" /><circle class="u" cx="8" cy="20" r="3.5" />
+        <circle class="i" cx="24" cy="6" r="3.5" /><circle class="i" cx="24" cy="16" r="3.5" /><circle class="i" cx="24" cy="26" r="3.5" />
+      </svg>
+      <span>RecSys&nbsp;×&nbsp;GNN&nbsp;×&nbsp;Topology</span>
+    </a>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+    <nav class="nav__links">
+      <a href="#abstract">Abstract</a>
+      <a href="#contents">Contents</a>
+      <a href="#topology">Topology</a>
+      <a href="#figures">Figures</a>
+      <a href="#takeaways">Takeaways</a>
+      <a href="#authors">Authors</a>
+      <a href="#cite" class="nav__cta">Cite</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <canvas class="hero__graph" aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <a class="badge" href="#news">
+      <span class="badge__dot"></span>
+      <span>Accepted in <em>Foundations and Trends<sup>®</sup> in Information Retrieval</em></span>
+    </a>
+    <p class="hero__kicker">A monograph</p>
+    <h1 class="hero__title">
+      On the Impact of <span class="hl">Graph Neural Networks</span> in Recommender Systems
+    </h1>
+    <p class="hero__subtitle">A Topological Perspective</p>
+    <p class="hero__lede">
+      Why do GNNs work so well for recommendation? We argue the answer lies in the
+      <strong>topology of the user–item graph</strong>, and in how model architectures encode it.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="https://arxiv.org/abs/2512.07384" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M10 14 21 3M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+        Read on arXiv
+      </a>
+      <a class="btn" href="https://arxiv.org/pdf/2512.07384" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+        PDF
+      </a>
+      <a class="btn" href="#cite">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H7zM7 11c0 3-1 5-3 6M15 7h4v4h-4zM15 11c0 3-1 5-3 6"/></svg>
+        BibTeX
+      </a>
+    </div>
+    <ul class="stats">
+      <li><b>11</b><span>GNN models<br>re-interpreted</span></li>
+      <li><b>13</b><span>dataset<br>characteristics</span></li>
+      <li><b>6</b><span>reference<br>datasets</span></li>
+      <li><b>1,800</b><span>sampled graphs in the<br>explanatory framework</span></li>
+    </ul>
+  </div>
+  <div class="hero__legend" aria-hidden="true">
+    <span><i class="dot dot--u"></i>users</span>
+    <span><i class="dot dot--i"></i>items</span>
+  </div>
+</section>
+
+<!-- ============================ NEWS ============================ -->
+<section class="news" id="news">
+  <div class="wrap">
+    <div class="news__card">
+      <div class="news__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <div>
+        <p class="news__date">October 2026</p>
+        <p class="news__text">
+          🎉 The monograph has just been <strong>accepted for publication in
+          <a href="https://www.emerald.com/ftinr" target="_blank" rel="noopener"><em>Foundations and Trends<sup>®</sup> in Information Retrieval</em></a></strong>
+          (Emerald Publishing). It will be officially published in <strong>early 2027</strong>. In the meantime,
+          the full manuscript is available on <a href="https://arxiv.org/abs/2512.07384" target="_blank" rel="noopener">arXiv</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ABSTRACT ============================ -->
+<section class="section" id="abstract">
+  <div class="wrap wrap--split">
+    <header class="section__head">
+      <p class="eyebrow">01 — Abstract</p>
+      <h2>Re-framing GNN-based recommendation through its topological underpinnings</h2>
+    </header>
+    <div class="prose prose--lead">
+      <p>
+        In recommender systems, user–item interactions can be modeled as a <strong>bipartite graph</strong>,
+        where user and item nodes are connected by undirected edges. This graph-based view has motivated the
+        rapid adoption of graph neural networks (GNNs), which often outperform collaborative filtering (CF)
+        methods such as latent factor models, deep neural networks, and generative strategies. Yet, despite
+        their empirical success, the reasons why GNNs offer systematic advantages over other CF approaches
+        remain only partially understood.
+      </p>
+      <p>
+        This monograph advances a <strong>topology-centered perspective</strong> on GNN-based recommendation.
+        We argue that a comprehensive understanding of these models' performance should consider the structural
+        properties of user–item graphs and their interaction with GNN architectural design. To support this view,
+        we introduce a formal <strong>taxonomy</strong> that distills common modeling patterns across eleven
+        representative GNN-based recommendation approaches and consolidates them into a unified conceptual
+        <strong>pipeline</strong>.
+      </p>
+      <p>
+        We further formalize thirteen <strong>classical and topological characteristics</strong> of recommendation
+        datasets and reinterpret them through the lens of graph machine learning. Using these definitions, we
+        analyze the considered GNN-based recommender architectures to assess how and to what extent they encode
+        such properties. Building on this analysis, we derive an <strong>explanatory framework</strong> that links
+        measurable dataset characteristics to model behavior and performance.
+      </p>
+      <p>
+        Taken together, this monograph re-frames GNN-based recommendation through its topological underpinnings
+        and outlines open theoretical, data-centric, and evaluation challenges for the next generation of
+        topology-aware recommender systems.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONTENTS ============================ -->
+<section class="section section--tint" id="contents">
+  <div class="wrap">
+    <header class="section__head section__head--center">
+      <p class="eyebrow">02 — Contents</p>
+      <h2>Ten chapters, from foundations to open challenges</h2>
+      <p class="section__sub">Click on a chapter to see what it covers, or download it as a PDF.</p>
+    </header>
+
+    <ol class="chapters">
+      <li class="chapter chapter--plain">
+        <div class="chapter__row">
+          <span class="chapter__num">—</span>
+          <span class="chapter__title">Front matter <small>title page, contents, abstract</small></span>
+          <a class="chapter__pdf" href="assets/pdf/00-front-matter.pdf" target="_blank" rel="noopener">PDF</a>
+        </div>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">01</span>
+            <span class="chapter__title">Introduction</span>
+            <span class="chapter__tag">Motivation</span>
+            <a class="chapter__pdf" href="assets/pdf/01-introduction.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Why do GNN-based recommenders perform so well? The chapter argues that answering this requires a deeper question: <em>which topological characteristics of user–item graphs do these models capture, and do they influence performance?</em> It introduces notation, the six reference datasets, and the eleven reference models.</p>
+            <ul class="pills"><li>Structure of the monograph</li><li>Notation &amp; terminology</li><li>Datasets</li><li>Models</li></ul>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">02</span>
+            <span class="chapter__title">Background on graph neural networks</span>
+            <span class="chapter__tag">Foundations</span>
+            <a class="chapter__pdf" href="assets/pdf/02-background-gnns.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Graphs, adjacency matrices and node features; the <strong>message passing</strong> algorithm (aggregation, update, layer combination); GCN and GAT; and link prediction as the encoder–decoder task of which recommendation is an instance.</p>
+            <div class="eq">$$\mathbf{X}_v^{(l)} = \text{Update}^{(l)}\!\left(\mathbf{X}_v^{(l-1)},\; \text{Aggregate}^{(l)}\big(\{\mathbf{X}_w^{(l-1)} \mid w \in \mathcal{N}_v\}\big)\right)$$</div>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">03</span>
+            <span class="chapter__title">The graph CF recommendation pipeline</span>
+            <span class="chapter__tag">Taxonomy</span>
+            <a class="chapter__pdf" href="assets/pdf/03-graph-cf-pipeline.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>A unified four-stage pipeline (<strong>graph input → graph structure → propagation → recommendation</strong>) and a formal taxonomy of eleven models: NGCF, DGCF, LightGCN, SGL, UltraGCN, GFCF, SVD-GCN, SimGCL, LightGCL, GraphAU, and XSimGCL. It also discusses normalization, sampling, exploration depth (same- vs different-type hops), layer combination and losses.</p>
+            <div class="eq">$$\tilde{A}_{ui} = \frac{1}{\sqrt{|\mathcal{N}_u|}\sqrt{|\mathcal{N}_i|}}$$</div>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">04</span>
+            <span class="chapter__title">Classical dataset characteristics</span>
+            <span class="chapter__tag">Data</span>
+            <a class="chapter__pdf" href="assets/pdf/04-classical-characteristics.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Space size <span class="m">$\Psi$</span>, shape <span class="m">$\Phi$</span>, density <span class="m">$\Delta$</span> and sparsity <span class="m">$\Lambda$</span>, and user/item Gini coefficients <span class="m">$\text{K}_\mathcal{U}, \text{K}_\mathcal{I}$</span>, with an empirical evaluation over MovieLens 1M, Yelp, Amazon Beauty, Amazon Books, Gowalla and LastFM.</p>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">05</span>
+            <span class="chapter__title">Topological dataset characteristics</span>
+            <span class="chapter__tag">Topology</span>
+            <a class="chapter__pdf" href="assets/pdf/05-topological-characteristics.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Node degree, clustering coefficient, degree assortativity and degree distribution, each formally defined and then <strong>re-interpreted for recommender systems</strong> (user activity, item popularity, collaborative signal, look-ahead behavior, scale-free tendency). See the <a href="#topology">topology section</a> below.</p>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">06</span>
+            <span class="chapter__title">Topological characteristics in GNN-based recommendation</span>
+            <span class="chapter__tag">Analysis</span>
+            <a class="chapter__pdf" href="assets/pdf/06-topology-in-gnn-recsys.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Each of the eleven models is re-written to expose which topological properties appear in its formulation. The node degree is <strong>explicitly</strong> encoded almost everywhere (via symmetric normalization), while clustering and assortativity are at most <strong>implicitly</strong> captured.</p>
+            <div class="eq">$$\mathbf{E}_u^{(l)} = \sum_{i \in \mathcal{N}_u^{(1)}} \frac{A_{ui}}{\sqrt{\sigma_u}\sqrt{\sigma_i}}\,\mathbf{E}_i^{(l-1)}$$</div>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">07</span>
+            <span class="chapter__title">Understanding the impact: an explanatory framework</span>
+            <span class="chapter__tag">Framework</span>
+            <a class="chapter__pdf" href="assets/pdf/07-explanatory-framework.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>A four-step methodology: (i) generate many small datasets via node/edge-dropout graph sampling; (ii) compute classical and topological features; (iii) train and evaluate GNN recommenders; (iv) fit a linear explanatory model linking characteristics to performance, and learn how to read its coefficients.</p>
+            <div class="eq">$$\mathbf{y} = \boldsymbol{\epsilon} + \theta_0 + \boldsymbol{\theta}_c \mathbf{X}_c$$</div>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">08</span>
+            <span class="chapter__title">Recent trends in GNN-based recommendation</span>
+            <span class="chapter__tag">Trends</span>
+            <a class="chapter__pdf" href="assets/pdf/08-recent-trends.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Spectral methodologies (partition-based FPSR/FPSR+ and the topology of partitions; robustness of spectral denoising methods to sparsity) and multimodal &amp; LLM-enhanced recommendation, with a topological analysis of how <strong>LLMRec</strong> reshapes the user–item graph.</p>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">09</span>
+            <span class="chapter__title">Take-home messages</span>
+            <span class="chapter__tag">Lessons</span>
+            <a class="chapter__pdf" href="assets/pdf/09-take-home-messages.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Actionable lessons on architectural choices, classical and topological characteristics, how topology hides inside model formulations, and how to use topology as a predictive tool for model selection. Highlights are <a href="#takeaways">below</a>.</p>
+          </div>
+        </details>
+      </li>
+      <li class="chapter">
+        <details>
+          <summary>
+            <span class="chapter__num">10</span>
+            <span class="chapter__title">Challenges and future directions</span>
+            <span class="chapter__tag">Outlook</span>
+            <a class="chapter__pdf" href="assets/pdf/10-challenges-future-directions.pdf" target="_blank" rel="noopener" aria-label="Download chapter PDF">PDF</a>
+          </summary>
+          <div class="chapter__body">
+            <p>Theoretical (expressiveness, over-smoothing and over-squashing, scalability), data-centric (scarcity, heterophily, generative topology modification with diffusion models and LLMs), task-specific (multimodal and sequential data) and methodological (benchmarking, reproducibility, beyond-accuracy evaluation) challenges.</p>
+          </div>
+        </details>
+      </li>
+      <li class="chapter chapter--plain">
+        <div class="chapter__row">
+          <span class="chapter__num">—</span>
+          <span class="chapter__title">References</span>
+          <a class="chapter__pdf" href="assets/pdf/11-references.pdf" target="_blank" rel="noopener">PDF</a>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================ TOPOLOGY ============================ -->
+<section class="section" id="topology">
+  <div class="wrap">
+    <header class="section__head section__head--center">
+      <p class="eyebrow">03 — Topology, re-interpreted</p>
+      <h2>Four graph properties, read through the lens of recommendation</h2>
+      <p class="section__sub">Classical network-science measures become concrete recommendation concepts once applied to the user–item bipartite graph.</p>
+    </header>
+
+    <div class="topo">
+      <article class="topo__card">
+        <div class="topo__viz" aria-hidden="true">
+          <svg viewBox="0 0 160 90">
+            <g class="e"><line x1="40" y1="45" x2="120" y2="12"/><line x1="40" y1="45" x2="120" y2="34"/><line x1="40" y1="45" x2="120" y2="56"/><line x1="40" y1="45" x2="120" y2="78"/></g>
+            <circle class="u big" cx="40" cy="45" r="10"/>
+            <circle class="i" cx="120" cy="12" r="6"/><circle class="i" cx="120" cy="34" r="6"/><circle class="i" cx="120" cy="56" r="6"/><circle class="i" cx="120" cy="78" r="6"/>
+          </svg>
+        </div>
+        <p class="topo__sym">$\sigma_\mathcal{U},\ \sigma_\mathcal{I}$</p>
+        <h3>Node degree</h3>
+        <p>The number of items a user interacted with, or users an item received. A direct measure of <strong>user activity</strong> and <strong>item popularity</strong>; low degrees signal cold-start users and niche items.</p>
+      </article>
+
+      <article class="topo__card">
+        <div class="topo__viz" aria-hidden="true">
+          <svg viewBox="0 0 160 90">
+            <g class="e"><line x1="30" y1="25" x2="110" y2="15"/><line x1="30" y1="25" x2="110" y2="45"/><line x1="30" y1="65" x2="110" y2="15"/><line x1="30" y1="65" x2="110" y2="45"/><line x1="30" y1="65" x2="110" y2="75"/></g>
+            <circle class="u" cx="30" cy="25" r="7"/><circle class="u" cx="30" cy="65" r="7"/>
+            <circle class="i shared" cx="110" cy="15" r="6"/><circle class="i shared" cx="110" cy="45" r="6"/><circle class="i" cx="110" cy="75" r="6"/>
+            <text x="140" y="49">67%</text>
+          </svg>
+        </div>
+        <p class="topo__sym">$\gamma_\mathcal{U},\ \gamma_\mathcal{I}$</p>
+        <h3>Clustering coefficient</h3>
+        <p>The overlap between neighborhoods of same-type nodes (two hops away). High values mean many co-occurrences: the very essence of the <strong>collaborative filtering signal</strong>.</p>
+      </article>
+
+      <article class="topo__card">
+        <div class="topo__viz" aria-hidden="true">
+          <svg viewBox="0 0 160 90">
+            <g class="e"><line x1="30" y1="45" x2="80" y2="15"/><line x1="30" y1="45" x2="80" y2="75"/><line x1="80" y1="15" x2="130" y2="45"/><line x1="80" y1="75" x2="130" y2="45"/><line x1="80" y1="15" x2="80" y2="75"/></g>
+            <circle class="u big" cx="30" cy="45" r="11"/><circle class="u" cx="80" cy="15" r="5"/><circle class="u" cx="80" cy="75" r="5"/><circle class="u big" cx="130" cy="45" r="11"/>
+          </svg>
+        </div>
+        <p class="topo__sym">$\rho_\mathcal{U},\ \rho_\mathcal{I}$</p>
+        <h3>Degree assortativity</h3>
+        <p>Do users with similar activity (items with similar popularity) gather together in the projected graphs? A broader, <strong>look-ahead</strong> property that goes beyond two hops.</p>
+      </article>
+
+      <article class="topo__card">
+        <div class="topo__viz" aria-hidden="true">
+          <svg viewBox="0 0 160 90">
+            <path class="axis" d="M20 10v68h130"/>
+            <path class="curve" d="M24 14C34 58 50 70 80 74S130 77 146 77"/>
+            <circle class="i" cx="24" cy="14" r="3"/><circle class="i" cx="40" cy="50" r="3"/><circle class="i" cx="60" cy="66" r="3"/><circle class="i" cx="90" cy="73" r="3"/><circle class="i" cx="130" cy="76" r="3"/>
+          </svg>
+        </div>
+        <p class="topo__sym">$P(d) \sim d^{-\theta}$</p>
+        <h3>Degree distribution</h3>
+        <p>User–item graphs are <strong>scale-free</strong>: many low-degree nodes and a few hubs (very active users, very popular items), which tend to grow over time and feed popularity bias.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <p class="callout__title">Key finding</p>
+      <p>GNN-based recommenders <strong>explicitly</strong> encode node degree in their formulations (through the
+      <span class="m">$1/\sqrt{\sigma_u}\sqrt{\sigma_i}$</span> normalization), while clustering coefficient and
+      degree assortativity are captured only <strong>implicitly</strong>, as emergent effects of multi-hop message passing.</p>
+    </div>
+
+    <!-- dataset table -->
+    <div class="table-card">
+      <div class="table-card__head">
+        <h3>Characteristics of the reference datasets</h3>
+        <div class="seg" role="tablist">
+          <button class="seg__btn is-active" data-table="topo" role="tab" aria-selected="true">Topological</button>
+          <button class="seg__btn" data-table="classic" role="tab" aria-selected="false">Classical</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="data" data-panel="topo">
+          <thead><tr><th>Dataset</th><th>$\sigma_\mathcal{U}$</th><th>$\sigma_\mathcal{I}$</th><th>$\gamma_\mathcal{U}$</th><th>$\gamma_\mathcal{I}$</th><th>$\rho_\mathcal{U}$</th><th>$\rho_\mathcal{I}$</th></tr></thead>
+          <tbody>
+            <tr><td>MovieLens 1M</td><td>175.317</td><td>335.506</td><td>0.065</td><td>0.055</td><td>−0.046</td><td>−0.040</td></tr>
+            <tr><td>Yelp</td><td>55.816</td><td>65.693</td><td>0.025</td><td>0.025</td><td class="pos">0.306</td><td class="pos">0.134</td></tr>
+            <tr><td>Amazon Beauty</td><td>36.130</td><td>26.449</td><td>0.021</td><td>0.025</td><td>−0.039</td><td>0.021</td></tr>
+            <tr><td>Amazon Books</td><td>43.486</td><td>57.686</td><td>0.033</td><td>0.026</td><td>0.031</td><td>−0.040</td></tr>
+            <tr><td>Gowalla</td><td>54.293</td><td>60.007</td><td>0.039</td><td>0.030</td><td>0.029</td><td>−0.029</td></tr>
+            <tr><td>LastFM</td><td>33.411</td><td>56.247</td><td>0.064</td><td>0.031</td><td>−0.029</td><td>−0.120</td></tr>
+          </tbody>
+        </table>
+        <table class="data" data-panel="classic" hidden>
+          <thead><tr><th>Dataset</th><th>$\Psi$</th><th>$\Phi$</th><th>$\Delta$</th><th>$\text{K}_\mathcal{U}$</th><th>$\text{K}_\mathcal{I}$</th></tr></thead>
+          <tbody>
+            <tr><td>MovieLens 1M</td><td>1.65·10<sup>7</sup></td><td>1.914</td><td>0.060</td><td>0.507</td><td>0.548</td></tr>
+            <tr><td>Yelp</td><td>1.83·10<sup>8</sup></td><td>1.177</td><td>0.004</td><td>0.341</td><td>0.376</td></tr>
+            <tr><td>Amazon Beauty</td><td>9.70·10<sup>7</sup></td><td>1.327</td><td>0.018</td><td>0.254</td><td>0.332</td></tr>
+            <tr><td>Amazon Books</td><td>7.95·10<sup>6</sup></td><td>0.732</td><td>0.003</td><td>0.408</td><td>0.304</td></tr>
+            <tr><td>Gowalla</td><td>1.52·10<sup>6</sup></td><td>1.105</td><td>0.025</td><td>0.327</td><td>0.369</td></tr>
+            <tr><td>LastFM</td><td>5.33·10<sup>6</sup></td><td>1.683</td><td>0.035</td><td>0.155</td><td>0.484</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-card__note">Datasets after iterative k-core filtering, ordered by number of interactions. Values as reported in the monograph.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FIGURES ============================ -->
+<section class="section section--tint" id="figures">
+  <div class="wrap">
+    <header class="section__head section__head--center">
+      <p class="eyebrow">04 — Selected figures</p>
+      <h2>A visual tour of the monograph</h2>
+    </header>
+
+    <figure class="fig">
+      <a href="assets/img/pipeline.png" class="fig__frame zoomable"><img src="assets/img/pipeline.png" alt="The graph CF pipeline: graph input, graph structure, propagation, recommendation" loading="lazy"></a>
+      <figcaption><b>The graph CF pipeline.</b> Four stages: (1) <em>graph input</em>, the user–item graph with optional node embeddings; (2) <em>graph structure</em>, optional modifications such as normalization and sampling; (3) <em>propagation</em>, multi-hop message passing; (4) <em>recommendation</em>, layer combination and loss.</figcaption>
+    </figure>
+
+    <figure class="fig">
+      <a href="assets/img/timeline.png" class="fig__frame zoomable"><img src="assets/img/timeline.png" alt="Timeline of representative approaches in graph collaborative filtering, 2017 to present" loading="lazy"></a>
+      <figcaption><b>A (non-exhaustive) timeline of graph CF.</b> From pioneering graph convolutional aggregation (2017–2018) to contrastive learning, the ultra-simplification of message passing, and recent uniformity/alignment, diffusion and LLM-based approaches.</figcaption>
+    </figure>
+
+    <figure class="fig">
+      <div class="fig__tabs" role="tablist">
+        <button class="seg__btn is-active" data-img="LightGCN">LightGCN</button>
+        <button class="seg__btn" data-img="DGCF">DGCF</button>
+        <button class="seg__btn" data-img="SVD-GCN">SVD-GCN</button>
+      </div>
+      <a href="assets/img/LightGCN.png" class="fig__frame zoomable" id="impact-link"><img id="impact-img" src="assets/img/LightGCN.png" alt="Impact of dataset characteristics on Recall@20 for LightGCN" loading="lazy"></a>
+      <div class="fig__frame fig__frame--legend"><img src="assets/img/legend.png" alt="Legend: color intensity indicates statistical significance" loading="lazy"></div>
+      <figcaption><b>The explanatory framework in action.</b> Impact of each dataset characteristic on Recall@20, per dataset and model. Bar length and direction show magnitude and sign; darker bars are more statistically significant. Degree-related characteristics consistently help; clustering and assortativity effects are model-dependent.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ TAKEAWAYS ============================ -->
+<section class="section" id="takeaways">
+  <div class="wrap">
+    <header class="section__head section__head--center">
+      <p class="eyebrow">05 — Take-home messages</p>
+      <h2>What we learned</h2>
+    </header>
+
+    <div class="takeaways">
+      <article class="tk"><span class="tk__n">A</span><h3>Simplicity often outperforms complexity</h3><p>Dropping non-linearities and feature transformations (NGCF → LightGCN) improves both accuracy and efficiency: the core strength lies in neighborhood aggregation.</p></article>
+      <article class="tk"><span class="tk__n">B</span><h3>Over-smoothing is the main bottleneck</h3><p>It restricts most models to shallow depths and harms novelty and diversity, motivating proxies to iterative message passing.</p></article>
+      <article class="tk"><span class="tk__n">C</span><h3>GNNs can amplify popularity bias</h3><p>Message passing favors high-degree nodes; performance correlates positively with item-side Gini, i.e., models reward popular items.</p></article>
+      <article class="tk"><span class="tk__n">D</span><h3>Denser data, better models; too many users can hurt</h3><p>Density relates positively to performance, while shape (users/items ratio) relates inversely to it.</p></article>
+      <article class="tk"><span class="tk__n">E</span><h3>Node degree is foundational</h3><p>The factorization component and node degree are the most consistent predictors of performance, even for shallow models.</p></article>
+      <article class="tk"><span class="tk__n">F</span><h3>Higher-order topology explains differences</h3><p>The ability to exploit clustering and assortativity is what often separates GNN architectures from one another.</p></article>
+      <article class="tk tk--wide"><span class="tk__n">→</span><h3>Make topological analysis a standard step</h3><p>Before costly training cycles, a topological analysis of the user–item graph can set realistic expectations and guide model selection: with low clustering and weak assortativity, a deep, complex GNN is unlikely to beat a simpler baseline.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AUTHORS ============================ -->
+<section class="section section--tint" id="authors">
+  <div class="wrap">
+    <header class="section__head section__head--center">
+      <p class="eyebrow">06 — Authors</p>
+      <h2>Who wrote it</h2>
+    </header>
+    <ul class="authors">
+      <li class="author"><span class="author__avatar">DM</span><div><p class="author__name">Daniele Malitesta</p><p class="author__aff">LUISS Guido Carli University</p></div></li>
+      <li class="author"><span class="author__avatar">AM</span><div><p class="author__name">Alberto Carlo Maria Mancino</p><p class="author__aff">Politecnico di Bari</p></div></li>
+      <li class="author"><span class="author__avatar">CP</span><div><p class="author__name">Claudio Pomo</p><p class="author__aff">Politecnico di Bari</p></div></li>
+      <li class="author"><span class="author__avatar">VA</span><div><p class="author__name">Vito Walter Anelli</p><p class="author__aff">Politecnico di Bari</p></div></li>
+      <li class="author"><span class="author__avatar">AB</span><div><p class="author__name">Alejandro Bellogín</p><p class="author__aff">Universidad Autónoma de Madrid</p></div></li>
+      <li class="author"><span class="author__avatar">TD</span><div><p class="author__name">Tommaso Di Noia</p><p class="author__aff">Politecnico di Bari</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ CITE ============================ -->
+<section class="section" id="cite">
+  <div class="wrap wrap--narrow">
+    <header class="section__head section__head--center">
+      <p class="eyebrow">07 — Citation</p>
+      <h2>Cite this work</h2>
+      <p class="section__sub">The official <em>Foundations and Trends<sup>®</sup> in Information Retrieval</em> reference will appear here upon publication (early 2027). For now, please cite the arXiv preprint.</p>
+    </header>
+    <div class="bib">
+      <div class="bib__bar">
+        <span>BibTeX · arXiv preprint</span>
+        <button class="bib__copy" type="button" data-copy="#bibtex">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+<!-- CITATION: replace this block with the FnTIR reference once available -->
+<pre id="bibtex"><code>@article{malitesta2025impact,
+  title         = {On the Impact of Graph Neural Networks in Recommender Systems: A Topological Perspective},
+  author        = {Malitesta, Daniele and Pomo, Claudio and Anelli, Vito Walter and Mancino, Alberto Carlo Maria and Bellog{\'i}n, Alejandro and Di Noia, Tommaso},
+  journal       = {arXiv preprint arXiv:2512.07384},
+  year          = {2025},
+  eprint        = {2512.07384},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR},
+  url           = {https://arxiv.org/abs/2512.07384}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div>
+      <p class="footer__title">On the Impact of Graph Neural Networks in Recommender Systems: A Topological Perspective</p>
+      <p class="footer__meta">Accepted in <a href="https://www.emerald.com/ftinr" target="_blank" rel="noopener"><em>Foundations and Trends<sup>®</sup> in Information Retrieval</em></a> (Emerald Publishing) · to appear in early 2027 · <a href="https://arxiv.org/abs/2512.07384" target="_blank" rel="noopener">arXiv:2512.07384</a></p>
+    </div>
+    <p class="footer__thanks">
+      <strong>Acknowledgments.</strong> This website was inspired by the companion page of the survey
+      <a href="https://fxia61.github.io/graphlearning/" target="_blank" rel="noopener">Graph Learning</a>.
+      We thank its authors for the idea of presenting a long-form monograph through an accessible web page.
+    </p>
+    <p class="footer__disclaimer">
+      <strong>Disclaimer.</strong> This website was entirely generated with
+      <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> (Anthropic) and may contain errors.
+      The monograph itself is the authoritative reference: in case of any discrepancy, please refer to the PDF.
+    </p>
+    <p class="footer__small">© 2026 The authors · <a href="#top">Back to top ↑</a></p>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lightbox" hidden><img alt=""><button class="lightbox__close" aria-label="Close">×</button></div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/js/main.js"></script>
+</body>
+</html>
