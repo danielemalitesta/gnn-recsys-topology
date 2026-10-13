@@ -91,7 +91,7 @@ Taken together, this monograph re-frames GNN-based recommendation through its to
 
 ## Contact
 
-Questions, comments or collaboration ideas? Contact **Daniele Malitesta** at [d.malitesta@gmail.com](mailto:d.malitesta@gmail.com).
+Questions, comments or collaboration ideas? Contact **Daniele Malitesta** at `d.malitesta [at] gmail [dot] com`.
 
 ## Citation
 

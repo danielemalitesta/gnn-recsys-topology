@@ -106,6 +106,21 @@
   lb.addEventListener("click", closeLb);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lb.hidden) closeLb(); });
 
+  /* ---------- obfuscated contact e-mail (assembled at runtime to keep scrapers away) ---------- */
+  var mailParts = ["moc.liamg", "atsetilam.d"]; // reversed: domain, user
+  function rev(t) { return t.split("").reverse().join(""); }
+  document.querySelectorAll(".js-email").forEach(function (a) {
+    function reveal() {
+      var addr = rev(mailParts[1]) + String.fromCharCode(64) + rev(mailParts[0]);
+      a.textContent = addr;
+      a.href = "mai" + "lto:" + addr;
+    }
+    // reveal only after a real user interaction with the page
+    ["mouseover", "focus", "touchstart"].forEach(function (ev) {
+      a.addEventListener(ev, reveal, { once: true, passive: true });
+    });
+  });
+
   /* ---------- copy BibTeX ---------- */
   document.querySelectorAll("[data-copy]").forEach(function (btn) {
     btn.addEventListener("click", function () {
